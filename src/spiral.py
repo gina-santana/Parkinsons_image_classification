@@ -8,6 +8,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator, array_to_im
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense
 from tensorflow.keras import backend as K
+from tensorflow.nn import leaky_relu
 
 img_width, img_height = 256, 256
 
@@ -25,26 +26,34 @@ else:
 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=input_shape))
-model.add(Activation('relu'))
+model.add(Activation(leaky_relu))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
-model.add(Conv2D(64, (3, 3)))
+model.add(Conv2D(32, (3, 3)))
+model.add(Activation('relu')) #changing to leaky relu from relu
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(32, (3, 3))) # added layer
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
+model.add(Conv2D(64, (3, 3))) # added layer
+model.add(Activation(leaky_relu))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
 model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
-model.add(Dense(64))
+model.add(Dense(500)) # originally 64 changed to 500
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
+              optimizer='adam',  # changed to adam
               metrics=['accuracy'])
 
 # this is the augmentation configuration we will use for training
