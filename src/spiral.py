@@ -15,8 +15,8 @@ train_data_dir = 'data/spiral/training'
 validation_data_dir = 'data/spiral/testing'
 # nb_train_samples = 100
 # nb_validation_samples = 100
-epochs = 10
-batch_size = 36
+epochs = 20
+batch_size = 24
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -34,17 +34,17 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25)) 
 
-model.add(Conv2D(64, (3, 3))) # added layer
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25)) 
+# # model.add(Conv2D(64, (3, 3))) # added layer
+# model.add(Activation('relu'))
+# model.add(MaxPooling2D(pool_size=(2, 2)))
+# model.add(Dropout(0.25)) 
 
 model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
-model.add(Dense(1000)) # originally 64 changed to 500
+model.add(Dense(128)) # originally 64 changed to 500
 model.add(Activation('relu'))
 # model.add(Dropout(0.5)) 
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
+model.add(Dense(2)) #change to 2 from 1 if 1 do sigmoid
+model.add(Activation('softmax')) #change to softmax; picks greatest probability
 
 model.compile(loss='binary_crossentropy',
               optimizer='adam',  # changed to adam
@@ -58,7 +58,6 @@ spiral_train_datagen = ImageDataGenerator(
         rescale=1./255,
         shear_range=0.2,
         horizontal_flip=False)
-
 
 # this is the augmentation configuration we will use for testing:
 # only rescaling
@@ -87,7 +86,7 @@ validation_generator = spiral_test_datagen.flow_from_directory(
 
 model.fit(
         train_generator,
-        steps_per_epoch=2,
+        steps_per_epoch=3,
         epochs=epochs,
         validation_data=validation_generator,
         validation_steps=1)
