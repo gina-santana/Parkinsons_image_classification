@@ -11,13 +11,12 @@ from tensorflow.keras import backend as K
 from tensorflow.nn import leaky_relu
 
 img_width, img_height = 256, 256
-
-train_data_dir = '/Users/endernova/Documents/Galvanize/capstones/Capstone2/data/spiral/training'
-validation_data_dir = '/Users/endernova/Documents/Galvanize/capstones/Capstone2/data/spiral/testing'
-nb_train_samples = 100
-nb_validation_samples = 100
-epochs = 200
-batch_size = 8
+train_data_dir = 'data/spiral/training'
+validation_data_dir = 'data/spiral/testing'
+# nb_train_samples = 100
+# nb_validation_samples = 100
+epochs = 50
+batch_size = 24
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -34,7 +33,7 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3)))
-model.add(Activation('relu')) #changing to leaky relu from relu
+model.add(Activation('relu')) 
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3))) # added layer
@@ -57,11 +56,15 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 # this is the augmentation configuration we will use for training
-train_datagen = ImageDataGenerator(
+spiral_train_datagen = ImageDataGenerator(
+        zoom_range=0.1,
+        height_shift_range=0.1,
+
+        rotation_range = 360, #spiral images 
         rescale=1./255,
         shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True)
+        horizontal_flip=False)
+
 
 # this is the augmentation configuration we will use for testing:
 # only rescaling
@@ -70,25 +73,30 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 # this is a generator that will read pictures found in
 # subfolers of 'data/train', and indefinitely generate
 # batches of augmented image data
-train_generator = train_datagen.flow_from_directory(
+train_generator = spiral_train_datagen.flow_from_directory(
         train_data_dir,  # this is the target directory
         target_size=(img_width, img_height),
-        batch_size=batch_size,
-        class_mode='binary')  # since we use binary_crossentropy loss, we need binary labels
+        batch_size=35,
+        class_mode='binary',
+        seed = 4,
+        shuffle = True,
+        )  # since we use binary_crossentropy loss, we need binary labels
 
 # this is a similar generator, for validation data
 validation_generator = test_datagen.flow_from_directory(
         validation_data_dir,
         target_size=(img_width, img_height),
-        batch_size=batch_size,
-        class_mode='binary')
+        batch_size=30,
+        class_mode='binary',
+        seed = 4,
+        shuffle = True,)
 
 model.fit(
         train_generator,
-        steps_per_epoch=10,
+        steps_per_epoch=3,
         epochs=epochs,
         validation_data=validation_generator,
-        validation_steps=nb_validation_samples // batch_size)
+        validation_steps=1)
 model.save_weights('first_try.h5')  # always save your weights after training or during training
 
 
