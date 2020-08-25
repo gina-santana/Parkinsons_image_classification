@@ -14,10 +14,10 @@ img_width, img_height = 256, 256
 
 train_data_dir = '/Users/endernova/Documents/Galvanize/capstones/Capstone2/data/spiral/training'
 validation_data_dir = '/Users/endernova/Documents/Galvanize/capstones/Capstone2/data/spiral/testing'
-nb_train_samples = 74
-nb_validation_samples = 30
-epochs = 50
-batch_size = 16
+nb_train_samples = 100
+nb_validation_samples = 100
+epochs = 200
+batch_size = 8
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -72,7 +72,7 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 # batches of augmented image data
 train_generator = train_datagen.flow_from_directory(
         train_data_dir,  # this is the target directory
-        target_size=(img_width, img_height),  # all images will be resized to 150x150
+        target_size=(img_width, img_height),
         batch_size=batch_size,
         class_mode='binary')  # since we use binary_crossentropy loss, we need binary labels
 
@@ -83,9 +83,9 @@ validation_generator = test_datagen.flow_from_directory(
         batch_size=batch_size,
         class_mode='binary')
 
-model.fit_generator(
+model.fit(
         train_generator,
-        steps_per_epoch=nb_train_samples // batch_size,
+        steps_per_epoch=10,
         epochs=epochs,
         validation_data=validation_generator,
         validation_steps=nb_validation_samples // batch_size)
