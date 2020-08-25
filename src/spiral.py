@@ -68,7 +68,7 @@ spiral_train_datagen = ImageDataGenerator(
 
 # this is the augmentation configuration we will use for testing:
 # only rescaling
-test_datagen = ImageDataGenerator(rescale=1./255)
+spiral_test_datagen = ImageDataGenerator(rescale=1./255)
 
 # this is a generator that will read pictures found in
 # subfolers of 'data/train', and indefinitely generate
@@ -83,7 +83,7 @@ train_generator = spiral_train_datagen.flow_from_directory(
         )  # since we use binary_crossentropy loss, we need binary labels
 
 # this is a similar generator, for validation data
-validation_generator = test_datagen.flow_from_directory(
+validation_generator = spiral_test_datagen.flow_from_directory(
         validation_data_dir,
         target_size=(img_width, img_height),
         batch_size=30,
