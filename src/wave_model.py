@@ -14,7 +14,7 @@ from tensorflow.keras import backend as K
 def cnn_model():
 
     model = Sequential()
-    model.add(Conv2D(32, (3, 3), input_shape=input_shape))
+    model.add(Conv2D(32, (4, 4), input_shape=input_shape))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Conv2D(32, (3, 3)))
@@ -29,30 +29,22 @@ def cnn_model():
     model.add(Conv2D(64, (3, 3))) 
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten())  
+    model.add(Flatten()) 
     model.add(Dense(500)) 
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1)) # single output neuron (output ranged from 0-1; binary class)
     model.add(Activation('sigmoid'))
     model.compile(loss='binary_crossentropy',
-                optimizer='adam',  
+                optimizer='adam', 
                 metrics=['accuracy'])
     return model
 
 
-# def plot_augmentation():
-#     for i in range(9):
-#         plt.subplot(300 + 1 + i)
-#         batch = train_generator.next()
-#         image = batch[0].astype('uint8')
-#         plt.imshow(image)
-#     return plt.show()
-
 if __name__=='__main__':
     img_width, img_height = 256, 256
-    train_data_dir = 'data/spiral/training'
-    validation_data_dir = 'data/spiral/testing'
+    train_data_dir = 'data/wave/training'
+    validation_data_dir = 'data/wave/testing'
     epochs = 275
     batch_size = 24
 
@@ -66,10 +58,10 @@ if __name__=='__main__':
     spiral_train_datagen = ImageDataGenerator(
         zoom_range=0.1,
         height_shift_range=0.1,
-        rotation_range = 360, #spiral images 
+        rotation_range = 90,
         rescale=1./255,
         shear_range=0.2,
-        horizontal_flip=False)
+        horizontal_flip=False) # true
 
     # this is the augmentation configuration for testing:
     spiral_test_datagen = ImageDataGenerator(rescale=1./255)
@@ -78,14 +70,14 @@ if __name__=='__main__':
     # subfolers of 'data/train', and indefinitely generate
     # batches of augmented image data
     train_generator = spiral_train_datagen.flow_from_directory(
-            train_data_dir,  
+            train_data_dir, 
             target_size=(img_width, img_height),
             batch_size=24,
             class_mode='binary',
             shuffle = True
             ) 
 
-    # validation data image generator
+    # this is a similar generator, for validation data
     validation_generator = spiral_test_datagen.flow_from_directory(
             validation_data_dir,
             target_size=(img_width, img_height),
@@ -113,6 +105,6 @@ if __name__=='__main__':
     plt.ylim([0,1])
     plt.legend(loc='lower right')
     plt.show()
-    plt.savefig('275.png')
+    plt.savefig('275wave.png')
 
     model.save_weights('first_try.h5') 
