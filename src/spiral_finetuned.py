@@ -14,20 +14,20 @@ from tensorflow.keras import backend as K
 def cnn_model():
 
     model = Sequential()
-    model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
-    # model.add(Activation('relu'))
+    model.add(Conv2D(32, (3, 3), input_shape=input_shape))
+    model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3), activation='relu'))
-    # model.add(Activation('relu'))
+    model.add(Conv2D(32, (3, 3)))
+    model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3), activation='relu'))
-    # model.add(Activation('relu'))  
+    model.add(Conv2D(32, (3, 3)))
+    model.add(Activation('relu'))  
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3), activation='relu'))  
-    # model.add(Activation('relu'))
+    model.add(Conv2D(32, (3, 3)))  
+    model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(64, (3, 3), activation='relu')) 
-    # model.add(Activation('relu'))
+    model.add(Conv2D(64, (3, 3))) 
+    model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
     model.add(Dense(500))  # originally 64 changed to 500
@@ -55,7 +55,7 @@ if __name__=='__main__':
     validation_data_dir = 'data/spiral/testing'
     # nb_train_samples = 100
     # nb_validation_samples = 100
-    epochs = 50
+    epochs = 275
     batch_size = 24
 
     if K.image_data_format() == 'channels_first':
@@ -106,14 +106,17 @@ if __name__=='__main__':
                 validation_data=validation_generator,
                 validation_steps=1)
 
+    print(model.predict(validation_generator))
 
     plt.plot(history.history['accuracy'], label='accuracy')
     plt.plot(history.history['val_accuracy'], label= 'val_accuracy')
+    plt.plot(history.history['loss'], label='loss')
+    plt.plot(history.history['val_loss'], label='val_loss')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.ylim([0,1])
     plt.legend(loc='lower right')
     plt.show()
-    plt.savefig('images/50epoch.png')
+    plt.savefig('275.png')
 
     model.save_weights('first_try.h5')  # always save your weights after training or during training
