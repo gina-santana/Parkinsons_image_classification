@@ -14,23 +14,27 @@ from tensorflow.keras import backend as K
 def cnn_model():
 
     model = Sequential()
-    model.add(Conv2D(32, (4, 4), input_shape=input_shape))
+    model.add(Conv2D(32, (5, 5), input_shape=input_shape))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3)))
+    model.add(Dense(100)) # added
+    model.add(Conv2D(32, (5, 5)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3)))
+    model.add(Dense(100)) # added
+    model.add(Conv2D(32, (5, 5)))
     model.add(Activation('relu'))  
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(32, (3, 3)))  
+    model.add(Dense(100)) # added
+    model.add(Conv2D(32, (5, 5)))  
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(64, (3, 3))) 
+    model.add(Dense(100)) # added
+    model.add(Conv2D(64, (5, 5))) 
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Flatten()) 
-    model.add(Dense(500)) 
+    model.add(Dense(100)) # was 500
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Dense(1)) # single output neuron (output ranged from 0-1; binary class)
@@ -58,10 +62,9 @@ if __name__=='__main__':
     spiral_train_datagen = ImageDataGenerator(
         zoom_range=0.1,
         height_shift_range=0.1,
-        rotation_range = 90,
         rescale=1./255,
         shear_range=0.2,
-        horizontal_flip=False) # true
+        horizontal_flip=True) #was false
 
     # this is the augmentation configuration for testing:
     spiral_test_datagen = ImageDataGenerator(rescale=1./255)
@@ -101,10 +104,10 @@ if __name__=='__main__':
     plt.plot(history.history['loss'], label='loss')
     plt.plot(history.history['val_loss'], label='val_loss')
     plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
+    # plt.ylabel('Accuracy')
     plt.ylim([0,1])
     plt.legend(loc='lower right')
     plt.show()
-    plt.savefig('275wave.png')
+    plt.savefig('275waveV3.png')
 
-    model.save_weights('first_try.h5') 
+    model.save_weights('try.h5') 
