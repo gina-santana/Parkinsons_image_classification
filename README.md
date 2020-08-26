@@ -20,12 +20,13 @@ The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Pa
 * An example of the raw spiral images: 
 
 ![placeholder](images/Raw_images3.png)
+###### Figure 2: The top row of images are spiral drawings done by healthy patients; the bottom row of images are spiral drawings done by patients with Parkinson's Disease
 
 * An example of the raw wave images:
 
 ![placeholder](images/Raw_images2.png)
+###### Figure 3: The top row of images are wave drawings done by healthy patients; the bottom row of images are wave drawings done by patients with Parkinson's Disease
 
-###### Figure 2: The top row of images are spiral drawings done by healthy patients; the bottom row of images are spiral drawings done by patients with Parkinson's Disease
 
 ## Convolutional Neural Network
 * Binary image classification 
@@ -85,7 +86,7 @@ _________________________________________________________________
 
 <img src="images/275spiral.png" width="561" height="462">
 
-###### Figure 3: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
+###### Figure 4: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
 
 
 ## Challenges
