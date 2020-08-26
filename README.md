@@ -19,7 +19,8 @@ The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Pa
 
 * A sample of the raw image data looked like this: 
 
-![placeholder](images/)
+![placeholder](images/Raw_images.png)
+
 ###### Figure 2: The top row of images are spiral drawings done by healthy patients; the bottom row of images are spiral drawings done by patients with Parkinson's Disease
 
 ## Convolutional Neural Network
