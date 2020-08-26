@@ -24,12 +24,70 @@ The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Pa
 ###### Figure 2: The top row of images are spiral drawings done by healthy patients; the bottom row of images are spiral drawings done by patients with Parkinson's Disease
 
 ## Convolutional Neural Network
+* Binary image classification 
+  * Detect if image was drawn from either **a)** Healthy or **b)** Parkinsons patient
+* The spiral drawing convolutional neural network (CNN) model had the following architecture:
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 254, 254, 32)      896       
+_________________________________________________________________
+activation (Activation)      (None, 254, 254, 32)      0         
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 127, 127, 32)      0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 125, 125, 32)      9248      
+_________________________________________________________________
+activation_1 (Activation)    (None, 125, 125, 32)      0         
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 62, 62, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 60, 60, 32)        9248      
+_________________________________________________________________
+activation_2 (Activation)    (None, 60, 60, 32)        0         
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 30, 30, 32)        0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 28, 28, 32)        9248      
+_________________________________________________________________
+activation_3 (Activation)    (None, 28, 28, 32)        0         
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 14, 14, 32)        0         
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 12, 12, 64)        18496     
+_________________________________________________________________
+activation_4 (Activation)    (None, 12, 12, 64)        0         
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 6, 6, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 2304)              0         
+_________________________________________________________________
+dense (Dense)                (None, 500)               1152500   
+_________________________________________________________________
+activation_5 (Activation)    (None, 500)               0         
+_________________________________________________________________
+dropout (Dropout)            (None, 500)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 501       
+_________________________________________________________________
+activation_6 (Activation)    (None, 1)                 0         
+=================================================================
+Total params: 1,200,137
+Trainable params: 1,200,137
+Non-trainable params: 0
+_________________________________________________________________
+```
+
+<img src="images/275spiral.png" width="561" height="462">
+
+###### Figure 3: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
+
 
 ## Challenges
-* Small dataset
-* A Convolutional Neural Network that refuses to learn
-  * An issue that I encountered was with a training accuracy score that typically ranged from 0.4 to 0.5...almost consistently sometimes on 0.5.
-  
+  * The primary challenge I faced with this dataset was having very few images to trian/test on
+    * How it was resolved: Data augmentation methods were used to circumvent this challenge. An image generator takes in the few images of the dataset and alters      them by various transformations such as rotating them, shifting height/width, changing brightness, etc. so that the model sees new images each time and          prevents overfitting
+   
 ## Potential Applications
 * Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease
 
