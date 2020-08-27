@@ -9,6 +9,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator, array_to_im
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense
 from tensorflow.keras import backend as K
+from sklearn.metrics import roc_curve, auc
 
 
 def cnn_model():
@@ -41,19 +42,11 @@ def cnn_model():
     return model
 
 
-# def plot_augmentation():
-#     for i in range(9):
-#         plt.subplot(300 + 1 + i)
-#         batch = train_generator.next()
-#         image = batch[0].astype('uint8')
-#         plt.imshow(image)
-#     return plt.show()
-
 if __name__=='__main__':
     img_width, img_height = 256, 256
     train_data_dir = 'data/spiral/training'
     validation_data_dir = 'data/spiral/testing'
-    epochs = 275
+    epochs = 400
     batch_size = 24
 
     if K.image_data_format() == 'channels_first':
@@ -91,28 +84,50 @@ if __name__=='__main__':
             target_size=(img_width, img_height),
             batch_size=30,
             class_mode='binary',
-            shuffle = True)
+            shuffle = False)
 
-    model.summary() 
+    model.load_weights('src/spiral.h5')
+    # model.summary() 
     
-    history = model.fit(
-                train_generator,
-                steps_per_epoch=3,
-                epochs=epochs,
-                validation_data=validation_generator,
-                validation_steps=1)
+    # history = model.fit(
+    #             train_generator,
+    #             steps_per_epoch=3,
+    #             epochs=epochs,
+    #             validation_data=validation_generator,
+    #             validation_steps=1)
 
-    print(model.predict(validation_generator))
+    model.evaluate(validation_generator)
 
-    plt.plot(history.history['accuracy'], label='accuracy')
-    plt.plot(history.history['val_accuracy'], label= 'val_accuracy')
-    plt.plot(history.history['loss'], label='loss')
-    plt.plot(history.history['val_loss'], label='val_loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.ylim([0,1])
-    plt.legend(loc='lower right')
+    STEP_SIZE_TEST = validation_generator.n//validation_generator.batch_size
+    validation_generator.reset()
+    x, classes = next(validation_generator)
+    preds = model.predict(x, verbose=1)
+
+    fpr, tpr, _ = roc_curve(classes,preds)
+    roc_auc = auc(fpr, tpr)
+    plt.figure()
+    lw = 2
+    plt.plot(fpr, tpr, color='darkturquoise',lw=lw, label='ROC curve (area = %0.2f)' % roc_auc)
+    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Spiral Model Receiver operating characteristic')
+    plt.legend(loc="lower right")
     plt.show()
-    plt.savefig('275V2.png')
+
+    # print(model.predict(validation_generator))
+
+    # plt.plot(history.history['accuracy'], label='accuracy')
+    # plt.plot(history.history['val_accuracy'], label= 'val_accuracy')
+    # plt.plot(history.history['loss'], label='loss')
+    # plt.plot(history.history['val_loss'], label='val_loss')
+    # plt.xlabel('Epoch')
+    # plt.ylabel('Accuracy')
+    # plt.ylim([0,1])
+    # plt.legend(loc='lower right')
+    # plt.show()
+    # plt.savefig('275V2.png')
 
     # model.save_weights('spiral.h5') 
