@@ -11,7 +11,8 @@ Parkinson's Disease is a condition characterized by symptoms related to movement
 ## Image Data: Acquisition and EDA
 * The **spiral** image dataset (and similarily the **waves** image dataset) was organized in the following way:
 
-![directory](images/Directory_hierarchy.jpg)
+<img src="images/Directory_hierarchy.jpg" width="640" height="360">
+
 ###### Figure 1: Parent Directory 'Spiral' was split into 2 folders: 'training' and 'testing', each containing folders of images labeled as either 'healthy' or 'Parkinsons'. 'Waves' was also split in the same format.
 
 The 'training, healthy' -labeled folder contained 36 images with the 'training, Parkinsons' - labeled folder also containing 36 images.
