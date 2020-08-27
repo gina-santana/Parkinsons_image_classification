@@ -9,14 +9,15 @@ Parkinson's Disease is a condition characterized by symptoms related to movement
 * Build and train a convolution neural network that can accurately classify an image as being drawn by either **a)** a healthy patient or **b)** a patient with Parkinson's Disease
 
 ## Image Data: Acquisition and EDA
-* Images were organized as so:
+* The **spiral** image dataset (and similarily the **waves** image dataset) was organized in the following way:
 
 ![directory](images/Directory_hierarchy.jpg)
-###### Figure 1: Parent Directory 'Spiral' was split into 2 folders: 'training' and 'testing', each containing folders of images labeled as either 'healthy' or 'Parkinsons'
+###### Figure 1: Parent Directory 'Spiral' was split into 2 folders: 'training' and 'testing', each containing folders of images labeled as either 'healthy' or 'Parkinsons'. 'Waves' was also split in the same format.
 
 The 'training, healthy' -labeled folder contained 36 images with the 'training, Parkinsons' - labeled folder also containing 36 images.
 The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Parkinsons' - labeled folder also containing 36 images.
 
+* I decided to create separate CNN models for spiral images and wave images
 * An example of the raw spiral images: 
 
 ![placeholder](images/Raw_images3.png)
@@ -27,11 +28,16 @@ The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Pa
 ![placeholder](images/Raw_images2.png)
 ###### Figure 3: The top row of images are wave drawings done by healthy patients; the bottom row of images are wave drawings done by patients with Parkinson's Disease
 
+* The raw images for both datasets needed no preprocessing, they were ripe for immediate model-use for the following reasons:
+  * Although technically having 3 color channels, the images had enough contrast between the pencil markings and the white background upon which they were drawn 
+  * All spiral images had the same image dimensions of ```image_width, image_height = 256, 256```. However, the wave images had slight variation in image             dimensions but for the purposes of my model, I was able to resize images within the ```ImageDataGenerator()``` to ```image_width, image_height = 128, 128```
 
-## Convolutional Neural Network
+## Convolutional Neural Networks
 * Binary image classification 
   * Detect if image was drawn from either **a)** Healthy or **b)** Parkinsons patient
-* The spiral drawing convolutional neural network (CNN) model had the following architecture:
+  
+#### Spiral Model:
+* The **spiral** CNN model had the following architecture:
 ```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -88,6 +94,64 @@ _________________________________________________________________
 
 ###### Figure 4: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
 
+#### Waves Model:
+
+* The **waves** CNN model had the following architecture:
+```
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 126, 126, 32)      896       
+_________________________________________________________________
+activation (Activation)      (None, 126, 126, 32)      0         
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 63, 63, 32)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 61, 61, 32)        9248      
+_________________________________________________________________
+activation_1 (Activation)    (None, 61, 61, 32)        0         
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 30, 30, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 28, 28, 32)        9248      
+_________________________________________________________________
+activation_2 (Activation)    (None, 28, 28, 32)        0         
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 14, 14, 32)        0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 12, 12, 64)        18496     
+_________________________________________________________________
+activation_3 (Activation)    (None, 12, 12, 64)        0         
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 6, 6, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 2304)              0         
+_________________________________________________________________
+dense (Dense)                (None, 500)               1152500   
+_________________________________________________________________
+activation_4 (Activation)    (None, 500)               0         
+_________________________________________________________________
+dropout (Dropout)            (None, 500)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 501       
+_________________________________________________________________
+activation_5 (Activation)    (None, 1)                 0         
+=================================================================
+Total params: 1,190,889
+Trainable params: 1,190,889
+Non-trainable params: 0
+```
+
+* The following evaluation plot of the **wave** model had 2 less convolution layers than what the model summary above shows. This version of the model did poorly as it had a general training accuracy around 0.5, validation loss and training loss that remained fairly constant at 0.7, and a validation accuracy that remained constant around 0.5. 
+
+<img src="images/1000.png" width="561" height="462">
+
+###### Figure 5: Evaluation of the waves model in which 1,000 epochs were run and had 2 less convolution layers than the starting model
+
+* The following version of the **wave** model had 1 less convolution model than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
+
+<img src="images/waves400final.png" width="561" height="462">
+
+###### Figure 6: Evaluation of the waves model in which 400 epochs were run and had 1 less convolution layer than the starting model.
 
 ## Challenges
   * The primary challenge I faced with this dataset was having very few images to trian/test on
@@ -97,3 +161,5 @@ _________________________________________________________________
 * Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease
 
 ## Future Studies
+* Combine models to take in both spiral and wave images
+* Continue to improve efficiency and accuracy of the current spiral and wave models
