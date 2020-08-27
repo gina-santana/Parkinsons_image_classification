@@ -99,6 +99,10 @@ _________________________________________________________________
 
 ###### Figure 4: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
 
+<img src="images/SpiralROCFinal.png" width="601" height="469">
+
+###### Figure 5: ROC curve of the final version of the spiral model. AUC = 0.88
+
 #### Waves Model:
 
 * The **waves** CNN model had the following architecture:
@@ -150,13 +154,17 @@ Non-trainable params: 0
 
 <img src="images/1000.png" width="561" height="462">
 
-###### Figure 5: Evaluation of the waves model in which 1,000 epochs were run and had 2 less convolution layers than the starting model
+###### Figure 6: Evaluation of the waves model in which 1,000 epochs were run and had 2 less convolution layers than the starting model
 
 * The following version of the **wave** model had 1 less convolution layer than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
 
 <img src="images/waves400final.png" width="561" height="462">
 
-###### Figure 6: Evaluation of the waves model in which 400 epochs were run and had 1 less convolution layer than the starting model.
+###### Figure 7: Evaluation of the waves model in which 400 epochs were run and had 1 less convolution layer than the starting model.
+
+<img src="images/WaveROCFinal.png" width="601" height="469">
+
+###### Figure 8: ROC evaluation of the final version of the wave model. AUC = 0.84
 
 ## Challenges
   * The primary challenge I faced with this dataset was having very few images to trian/test on
