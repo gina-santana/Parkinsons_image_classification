@@ -1,4 +1,4 @@
-# Parkinson's Disease Kinetic Tremor Diagnostic Image Classification Capstone
+# E.P.I.C: Early Parkinson's Image Classification
 
 ![banner](images/brain.jpg)
 
