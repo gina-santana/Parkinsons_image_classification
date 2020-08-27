@@ -113,6 +113,6 @@ if __name__=='__main__':
     plt.ylim([0,1])
     plt.legend(loc='lower right')
     plt.show()
-    plt.savefig('275.png')
+    plt.savefig('275V2.png')
 
-    model.save_weights('first_try.h5') 
+    # model.save_weights('spiral.h5') 

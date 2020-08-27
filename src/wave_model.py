@@ -106,4 +106,4 @@ if __name__=='__main__':
     plt.show()
     plt.savefig('1000.png')
 
-    model.save_weights('try.h5') 
+    # model.save_weights('try.h5') 
