@@ -5,7 +5,7 @@
 ## Background
 Parkinson's Disease is a condition characterized by symptoms related to movement such as tremor, rigidity, bradykinesia, and imbalance to name a few. Handwriting and simple drawing tests may aid in the diagnosis and characterization of early parkinson's disease. However, these tests often need the interpretation of an expert. The images used in this project come from a [kaggle dataset](https://www.kaggle.com/kmader/parkinsons-drawings) inspired by a study done by [Zham et al.](https://www.frontiersin.org/articles/10.3389/fneur.2017.00435/full) published in Frontiers of Neurology. Image classification and recognition models may aid in the efficiency and accuracy of diagnosing early Parkinson's Disease.
 
-## Objective(s)
+## Objective
 * Build and train a convolution neural network that can accurately classify an image as being drawn by either **a)** a healthy patient or **b)** a patient with Parkinson's Disease
 
 ## Image Data: Acquisition and EDA
@@ -15,9 +15,13 @@ Parkinson's Disease is a condition characterized by symptoms related to movement
 
 ###### Figure 1: Parent Directory 'Spiral' was split into 2 folders: 'training' and 'testing', each containing folders of images labeled as either 'healthy' or 'Parkinsons'. 'Waves' was also split in the same format.
 
-The 'training, healthy' -labeled folder contained 36 images with the 'training, Parkinsons' - labeled folder also containing 36 images.
-The 'testing, healthy' - labeled folder contained 15 images and the 'testing, Parkinsons' - labeled folder also containing 36 images.
 
+* **Spiral** Dataset
+  * Training set: 36 Healthy, 36 Parkinson's
+  * Testing set: 15 Healthy, 15 Parkinson's
+* **Wave** Dataset
+  * Training set: 36 Healthy, 36 Parkinson's
+  * Testing set: 15 Healthy, 15 Parkinson's
 * I decided to create separate CNN models for spiral images and wave images
 * An example of the raw spiral images: 
 
@@ -148,7 +152,7 @@ Non-trainable params: 0
 
 ###### Figure 5: Evaluation of the waves model in which 1,000 epochs were run and had 2 less convolution layers than the starting model
 
-* The following version of the **wave** model had 1 less convolution model than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
+* The following version of the **wave** model had 1 less convolution layer than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
 
 <img src="images/waves400final.png" width="561" height="462">
 
@@ -159,7 +163,7 @@ Non-trainable params: 0
     * How it was resolved: Data augmentation methods were used to circumvent this challenge. An image generator takes in the few images of the dataset and alters      them by various transformations such as rotating them, shifting height/width, changing brightness, etc. so that the model sees new images each time and          prevents overfitting
    
 ## Potential Applications
-* Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease
+* Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease, family history of Parkinson's, or are taking medications that may cause Parkinson-like symptoms
 
 ## Future Studies
 * Combine models to take in both spiral and wave images
