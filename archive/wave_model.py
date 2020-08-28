@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from skimage import io, color, filters
 from skimage.transform import resize, rotate
@@ -45,7 +44,7 @@ if __name__=='__main__':
     img_width, img_height = 128, 128 
     train_data_dir = 'data/wave/training'
     validation_data_dir = 'data/wave/testing'
-    epochs = 400
+    epochs = 750 # was 400
     batch_size = 24
 
     if K.image_data_format() == 'channels_first':
@@ -53,7 +52,7 @@ if __name__=='__main__':
     else:
         input_shape = (img_width, img_height, 3)
 
-    model = cnn_model() 
+    model = cnn_model()
 
     wave_train_datagen = ImageDataGenerator(
         zoom_range=0.2,
@@ -87,12 +86,12 @@ if __name__=='__main__':
 
     # model.summary() 
     
-    # history = model.fit(
-    #             train_generator,
-    #             steps_per_epoch=3,
-    #             epochs=epochs,
-    #             validation_data=validation_generator,
-    #             validation_steps=1)
+    history = model.fit(
+                train_generator,
+                steps_per_epoch=3,
+                epochs=epochs,
+                validation_data=validation_generator,
+                validation_steps=1)
 
     model.evaluate(validation_generator)
 
@@ -117,15 +116,17 @@ if __name__=='__main__':
 
     # print(model.predict(validation_generator))
 
-    # plt.plot(history.history['accuracy'], label='accuracy')
-    # plt.plot(history.history['val_accuracy'], label= 'val_accuracy')
-    # plt.plot(history.history['loss'], label='loss')
-    # plt.plot(history.history['val_loss'], label='val_loss')
-    # plt.xlabel('Epoch')
-    # # plt.ylabel('Accuracy')
-    # plt.ylim([0,1])
-    # plt.legend(loc='lower right')
-    # plt.show()
+    plt.plot(history.history['accuracy'], label='accuracy')
+    plt.plot(history.history['val_accuracy'], label= 'val_accuracy')
+    plt.plot(history.history['loss'], label='loss')
+    plt.plot(history.history['val_loss'], label='val_loss')
+    plt.xlabel('Epoch')
+    plt.ylim([0,1])
+    plt.legend(loc='lower right')
+    plt.show()
     # # plt.savefig('1000.png')
 
-    # model.save_weights('try.h5') 
+    # model.save_weights('try.h5') # V1
+
+    # model.save_weights('wave.h5') #  V2 90% accuracy with 750 epochs
+
