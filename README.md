@@ -42,121 +42,50 @@ Parkinson's Disease is a condition characterized by symptoms related to movement
   * Detect if image was drawn from either **a)** Healthy or **b)** Parkinsons patient
   
 #### Spiral Model:
-* The **spiral** CNN model had the following architecture:
+* The **spiral** CNN model had the following architecture and trainable parameters:
+
+![modelbanner](images/banner.png)
+
 ```
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-conv2d (Conv2D)              (None, 254, 254, 32)      896       
-_________________________________________________________________
-activation (Activation)      (None, 254, 254, 32)      0         
-_________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 127, 127, 32)      0         
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 125, 125, 32)      9248      
-_________________________________________________________________
-activation_1 (Activation)    (None, 125, 125, 32)      0         
-_________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 62, 62, 32)        0         
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 60, 60, 32)        9248      
-_________________________________________________________________
-activation_2 (Activation)    (None, 60, 60, 32)        0         
-_________________________________________________________________
-max_pooling2d_2 (MaxPooling2 (None, 30, 30, 32)        0         
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 28, 28, 32)        9248      
-_________________________________________________________________
-activation_3 (Activation)    (None, 28, 28, 32)        0         
-_________________________________________________________________
-max_pooling2d_3 (MaxPooling2 (None, 14, 14, 32)        0         
-_________________________________________________________________
-conv2d_4 (Conv2D)            (None, 12, 12, 64)        18496     
-_________________________________________________________________
-activation_4 (Activation)    (None, 12, 12, 64)        0         
-_________________________________________________________________
-max_pooling2d_4 (MaxPooling2 (None, 6, 6, 64)          0         
-_________________________________________________________________
-flatten (Flatten)            (None, 2304)              0         
-_________________________________________________________________
-dense (Dense)                (None, 500)               1152500   
-_________________________________________________________________
-activation_5 (Activation)    (None, 500)               0         
-_________________________________________________________________
-dropout (Dropout)            (None, 500)               0         
-_________________________________________________________________
-dense_1 (Dense)              (None, 1)                 501       
-_________________________________________________________________
-activation_6 (Activation)    (None, 1)                 0         
-=================================================================
 Total params: 1,200,137
 Trainable params: 1,200,137
 Non-trainable params: 0
 _________________________________________________________________
 ```
 
+*The model was built with 4 repeating layers of convolution and max-pooling layers with 32 filters followed by a 64 filter convolution and max-pooling layer, a flatten, dense layer and output
+* Figure 4 shows how the final version of my spiral model performed with 275 epochs. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
+* Figure 5 shows the ROC curve of the model's performance with an AUC of 0.88
+* A True positive reperesents a scenario in which an input image is truly labeled as "Parkinson's" and the model's classification was also  "Parkinson's". 
+* A False positive represents a scenario in which an input image is truly labeled "Healthy" and the model classifies is as "Parkinson's"
+
 <img src="images/275spiral.png" width="561" height="462">
 
-###### Figure 4: Evaluation of the spiral model in which 275 epochs were run. Around 160 epochs in was when true improvements were seen in the model's ability to learn and classify images of spiral drawings.
+###### Figure 4: Evaluation of the spiral model in which 275 epochs were run. 
 
 <img src="images/SpiralROCFinal.png" width="601" height="469">
 
-###### Figure 5: ROC curve of the final version of the spiral model. AUC = 0.88
+###### Figure 5: ROC curve of the final version of the spiral model. 
 
 #### Waves Model:
 
-* The **waves** CNN model had the following architecture:
+* The **waves** CNN model had the following architecture and trainable parameters:
+
+![Wavemodel](images/WaveArchitecture.png)
+
 ```
-Layer (type)                 Output Shape              Param #   
-=================================================================
-conv2d (Conv2D)              (None, 126, 126, 32)      896       
-_________________________________________________________________
-activation (Activation)      (None, 126, 126, 32)      0         
-_________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 63, 63, 32)        0         
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 61, 61, 32)        9248      
-_________________________________________________________________
-activation_1 (Activation)    (None, 61, 61, 32)        0         
-_________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 30, 30, 32)        0         
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 28, 28, 32)        9248      
-_________________________________________________________________
-activation_2 (Activation)    (None, 28, 28, 32)        0         
-_________________________________________________________________
-max_pooling2d_2 (MaxPooling2 (None, 14, 14, 32)        0         
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 12, 12, 64)        18496     
-_________________________________________________________________
-activation_3 (Activation)    (None, 12, 12, 64)        0         
-_________________________________________________________________
-max_pooling2d_3 (MaxPooling2 (None, 6, 6, 64)          0         
-_________________________________________________________________
-flatten (Flatten)            (None, 2304)              0         
-_________________________________________________________________
-dense (Dense)                (None, 500)               1152500   
-_________________________________________________________________
-activation_4 (Activation)    (None, 500)               0         
-_________________________________________________________________
-dropout (Dropout)            (None, 500)               0         
-_________________________________________________________________
-dense_1 (Dense)              (None, 1)                 501       
-_________________________________________________________________
-activation_5 (Activation)    (None, 1)                 0         
-=================================================================
 Total params: 1,190,889
 Trainable params: 1,190,889
 Non-trainable params: 0
 ```
 
-* The following evaluation plot of the **wave** model had 2 less convolution layers than what the model summary above shows. This version of the model did poorly as it had a general training accuracy around 0.5, validation loss and training loss that remained fairly constant at 0.7, and a validation accuracy that remained constant around 0.5. 
+* The evaluation plot (Figure 6) of the **wave** model had 2 less convolution layers than what the model summary above shows. This version of the model did poorly as it had a general training accuracy around 0.5, validation loss and training loss that remained fairly constant at 0.7, and a validation accuracy that remained constant around 0.5. 
+* The second version of the **wave** model (Figure 7) had 1 less convolution layer than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
+* The second version of the **wave** model was run again with increased epochs (400 --> 750) and had improved accuracy (90% compared to 77%). The corresponding ROC curve for this version 2.5 of the **wave** model can be found in Figure 8. 
 
 <img src="images/1000.png" width="561" height="462">
 
 ###### Figure 6: Evaluation of the waves model in which 1,000 epochs were run and had 2 less convolution layers than the starting model
-
-* The following version of the **wave** model had 1 less convolution layer than what the model summary shows above. This version of the model is ultimately what did very well as demonstrated by the rapid increases in both training accuracy and validation accuracy at around 75 epochs. The training loss started to decrease rapidly after 75 epochs as well.
 
 <img src="images/waves400final.png" width="561" height="462">
 
@@ -168,11 +97,12 @@ Non-trainable params: 0
 
 ## Challenges
   * The primary challenge I faced with this dataset was having very few images to trian/test on
-    * How it was resolved: Data augmentation methods were used to circumvent this challenge. An image generator takes in the few images of the dataset and alters      them by various transformations such as rotating them, shifting height/width, changing brightness, etc. so that the model sees new images each time and          prevents overfitting
+    * How it was resolved: Data augmentation methods were used to circumvent this challenge. An image generator takes in the few images of the dataset and alters      them by various transformations (i.e. rotation, zoom, flips, etc.) so that the model sees new images each time and prevents overfitting
    
 ## Potential Applications
-* Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease, family history of Parkinson's, or are taking medications that may cause Parkinson-like symptoms
+* Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease, family history of Parkinson's, or are taking medications that may cause Parkinson-like symptoms.
+* If used in a pharmacy setting, a potential application of this could be in flagging patients who are taking medications commonly known to cause parkinsonism-like symptoms. These flagged patients can then be monitored and asked to perform the simple drawing test at their local pharmacy or local clinic to get acces to care earlier rather than later.
 
 ## Future Studies
-* Combine models to take in both spiral and wave images
-* Continue to improve efficiency and accuracy of the current spiral and wave models
+* Combine models to take in both spiral and wave images at the same time
+* Continue to improve efficiency and accuracy of the current spiral and wave models. 
