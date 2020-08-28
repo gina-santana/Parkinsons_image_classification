@@ -162,9 +162,9 @@ Non-trainable params: 0
 
 ###### Figure 7: Evaluation of the waves model in which 400 epochs were run and had 1 less convolution layer than the starting model.
 
-<img src="images/WaveROCFinal.png" width="601" height="469">
+<img src="images/WaveModelROC750epochs.png" width="601" height="469">
 
-###### Figure 8: ROC evaluation of the final version of the wave model. AUC = 0.84
+###### Figure 8: ROC evaluation of the final version of the wave model. AUC = 0.93
 
 ## Challenges
   * The primary challenge I faced with this dataset was having very few images to trian/test on
