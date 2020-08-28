@@ -98,6 +98,10 @@ Non-trainable params: 0
 ## Challenges
   * The primary challenge I faced with this dataset was having very few images to trian/test on
     * How it was resolved: Data augmentation methods were used to circumvent this challenge. An image generator takes in the few images of the dataset and alters      them by various transformations (i.e. rotation, zoom, flips, etc.) so that the model sees new images each time and prevents overfitting
+    
+    ![DataAugExample](images/DataAugmentationExample.jpg)
+    
+    ###### Figure 9: Data Augmentation example
    
 ## Potential Applications
 * Apps that may be able to take in a snapshot image of a spiral or wave drawn by a patient that may be used in clinics or pharmacies for patients who suspect they may have early signs of Parkinson's Disease, family history of Parkinson's, or are taking medications that may cause Parkinson-like symptoms.
