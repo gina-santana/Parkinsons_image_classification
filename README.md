@@ -110,3 +110,6 @@ Non-trainable params: 0
 ## Future Studies
 * Combine models to take in both spiral and wave images at the same time
 * Continue to improve efficiency and accuracy of the current spiral and wave models. 
+
+A PDF version of presentation slides may be found [here](https://github.com/gina-santana/Parkinsons_image_classification/blob/master/EPICslides.pdf)
+
